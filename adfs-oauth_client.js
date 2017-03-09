@@ -52,7 +52,7 @@ Adfsoauth.requestCredential = function (options, credentialRequestCompleteCallba
     "response_type": "code",
     "client_id":  config.clientId,
     "resource": config.resource,
-    "redirect_uri": OAuth._redirectUri('adfsoauth', config),
+    "redirect_uri": config.redirectUrl,
     "state": OAuth._stateParam(loginStyle, credentialToken, options.redirectUrl)
   });
   var loginUrl = config.oauthAdfsUrl + '/authorize?' +

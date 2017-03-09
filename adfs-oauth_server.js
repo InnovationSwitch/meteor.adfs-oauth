@@ -50,7 +50,7 @@ var getTokens = function (query) {
                     code: query.code,
                     client_id: config.clientId,
                     client_secret: OAuth.openSecret(config.secret),
-                    redirect_uri: OAuth._redirectUri('adfsoauth', config),
+                    redirect_uri: config.redirectUri,
                     grant_type: 'authorization_code'
                 }
             });
