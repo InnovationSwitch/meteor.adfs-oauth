@@ -2,8 +2,7 @@ Package.describe({
   name: 'innovationswitch:meteor.adfs-oauth',
   version: '0.0.3',
   summary: 'Oauth2 authentication using Microsoft ADFS3 Oauth service (Active Directory) that allows for a custom callback URL',
-  // URL to the Git repository containing the source code for this package.
-  git: '',
+  git: 'https://github.com/InnovationSwitch/meteor.adfs-oauth',
   documentation: 'README.md'
 });
 
