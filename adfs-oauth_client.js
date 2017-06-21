@@ -14,11 +14,16 @@ Adfsoauth.requestCredential = function (options, credentialRequestCompleteCallba
     options = {};
   }
 
-  var config = ServiceConfiguration.configurations.findOne({service: 'adfsoauth'});
-  if (!config) {
-    credentialRequestCompleteCallback && credentialRequestCompleteCallback(
-      new ServiceConfiguration.ConfigError());
-    return;
+  if (typeof Session != 'undefined' && Session.get('companyId') != 'undefined') {
+    var config = Companies.findOne({_id: Session.get('companyId')});
+  } else {
+
+    var config = ServiceConfiguration.configurations.findOne({service: 'adfsoauth'});
+    if (!config) {
+      credentialRequestCompleteCallback && credentialRequestCompleteCallback(
+        new ServiceConfiguration.ConfigError());
+      return;
+    }
   }
 
   var credentialToken = Random.secret();
