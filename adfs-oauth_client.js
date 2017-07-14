@@ -16,6 +16,13 @@ Adfsoauth.requestCredential = function (options, credentialRequestCompleteCallba
 
   if (typeof Session != 'undefined' && Session.get('companyId') != 'undefined') {
     var config = Companies.findOne({_id: Session.get('companyId')});
+
+    if (!config) {
+      credentialRequestCompleteCallback && credentialRequestCompleteCallback(
+        new ServiceConfiguration.ConfigError());
+      return;
+    }
+
   } else {
 
     var config = ServiceConfiguration.configurations.findOne({service: 'adfsoauth'});

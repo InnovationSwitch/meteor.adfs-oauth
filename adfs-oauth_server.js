@@ -1,9 +1,16 @@
 Adfsoauth = {};
 
 OAuth.registerService('adfsoauth', 2, null, function (query) {
-    var config = ServiceConfiguration.configurations.findOne({service: 'adfsoauth'});
-    if (!config)
+
+    if (typeof Session != 'undefined' && Session.get('companyId') != 'undefined') {
+        var config = Companies.findOne({_id: Session.get('companyId')});
+    } else {
+        var config = ServiceConfiguration.configurations.findOne({service: 'adfsoauth'});
+    }
+
+    if (!config) {
         throw new ServiceConfiguration.ConfigError();
+    }
 
     var response = getTokens(query);
     var expiresAt = (+new Date) + (1000 * parseInt(response.expiresIn, 10));
@@ -35,9 +42,16 @@ OAuth.registerService('adfsoauth', 2, null, function (query) {
 // - expiresIn: lifetime of token in seconds
 // - refreshToken, if this is the first authorization request
 var getTokens = function (query) {
-    var config = ServiceConfiguration.configurations.findOne({service: 'adfsoauth'});
-    if (!config)
+
+    if (typeof Session != 'undefined' && Session.get('companyId') != 'undefined') {
+        var config = Companies.findOne({_id: Session.get('companyId')});
+    } else {
+        var config = ServiceConfiguration.configurations.findOne({service: 'adfsoauth'});
+    }
+
+    if (!config) {
         throw new ServiceConfiguration.ConfigError();
+    }
 
     var response;
     try {
@@ -74,9 +88,16 @@ var getTokens = function (query) {
 };
 
 var getIdentity = function (accessToken) {
-    var config = ServiceConfiguration.configurations.findOne({service: 'adfsoauth'});
-    if (!config)
+
+    if (typeof Session != 'undefined' && Session.get('companyId') != 'undefined') {
+        var config = Companies.findOne({_id: Session.get('companyId')});
+    } else {
+        var config = ServiceConfiguration.configurations.findOne({service: 'adfsoauth'});
+    }
+
+    if (!config) {
         throw new ServiceConfiguration.ConfigError();
+    }
 
     try {
         return verifyToken(accessToken, config.publicCertPath, 'RS256');
