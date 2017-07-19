@@ -12,10 +12,24 @@ OAuth.registerService('adfsoauth', 2, null, function (query) {
         throw new ServiceConfiguration.ConfigError();
     }
 
+    console.log('============QUERY==========');
+    console.log(query);
+
     var response = getTokens(query);
+
+    console.log('=============RESPONSE================');
+    console.log(response);
+
     var expiresAt = (+new Date) + (1000 * parseInt(response.expiresIn, 10));
     var accessToken = response.accessToken;
+
+    console.log('=============ACCESS TOKEN================');
+    console.log(accessToken);
+
     var identity = getIdentity(accessToken);
+
+    console.log('=============IDENTITY================');
+    console.log(identity);
 
     var serviceData = {
         accessToken: accessToken,
