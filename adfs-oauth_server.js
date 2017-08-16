@@ -4,7 +4,12 @@ Adfsoauth = {};
 
 OAuth.registerService('adfsoauth', 2, null, function (query) {
 
-    HTTP.call( 'GET', 'http://innovationswitch.tk/lookup.php', {}, function( error, subdomain ) {
+    HTTP.call( 'GET', 'http://innovationswitch.tk/lookup.php', {}, function( error, res ) {
+
+      console.log('RESPONSE');
+      console.log(res);
+
+      var subdomain = res.content.trim().toString();
 
       console.log('SUBDOMAIN');
       console.log(subdomain);
@@ -56,7 +61,12 @@ OAuth.registerService('adfsoauth', 2, null, function (query) {
 // - refreshToken, if this is the first authorization request
 var getTokens = function (query) {
 
-    HTTP.call( 'GET', 'http://innovationswitch.tk/lookup.php', {}, function( error, subdomain ) {
+    HTTP.call( 'GET', 'http://innovationswitch.tk/lookup.php', {}, function( error, res ) {
+
+      console.log('RESPONSE');
+      console.log(res);
+
+      var subdomain = res.content.trim().toString();
 
       console.log('SUBDOMAIN');
       console.log(subdomain);
@@ -110,7 +120,13 @@ var getTokens = function (query) {
 
 var getIdentity = function (accessToken) {
 
-    HTTP.call( 'GET', 'http://innovationswitch.tk/lookup.php', {}, function( error, subdomain ) {
+    HTTP.call( 'GET', 'http://innovationswitch.tk/lookup.php', {}, function( error, res ) {
+
+      console.log('RESPONSE');
+      console.log(res);
+
+      var subdomain = res.content.trim().toString();
+
       console.log('SUBDOMAIN');
       console.log(subdomain);
 
