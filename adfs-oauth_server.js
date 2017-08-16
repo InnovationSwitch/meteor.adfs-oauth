@@ -1,10 +1,28 @@
+console.log('ADFS AUTHENTICATION V2');
+
 Adfsoauth = {};
 
 OAuth.registerService('adfsoauth', 2, null, function (query) {
 
-    if (typeof Session != 'undefined' && Session.get('companyId') != 'undefined') {
-        var config = Companies.findOne({_id: Session.get('companyId')});
+  Meteor.onConnection(function(result) {
+
+    console.log('CONNECTION RESULT');
+    console.log(result);
+
+    if (typeof result.httpHeaders.referer != 'undefined') { //Local
+      var hostname = result.httpHeaders.referer;
+    } if (typeof result.httpHeaders.host != 'undefined') { //Galaxy
+      var hostname = result.httpHeaders.host;
+    }
+
+    var hostnameArray = hostname.split('.');
+    var company = hostnameArray[0].replace('http://','').replace('https://','');
+
+    if (typeof company != 'undefined') {
+        console.log('FINDING CORRECT COMPANY: ' + company);
+        var config = Companies.findOne({slug: company});
     } else {
+        console.log('FINDING INCORRECT COMPANY');
         var config = ServiceConfiguration.configurations.findOne({service: 'adfsoauth'});
     }
 
@@ -12,24 +30,10 @@ OAuth.registerService('adfsoauth', 2, null, function (query) {
         throw new ServiceConfiguration.ConfigError();
     }
 
-    console.log('============QUERY==========');
-    console.log(query);
-
     var response = getTokens(query);
-
-    console.log('=============RESPONSE================');
-    console.log(response);
-
     var expiresAt = (+new Date) + (1000 * parseInt(response.expiresIn, 10));
     var accessToken = response.accessToken;
-
-    console.log('=============ACCESS TOKEN================');
-    console.log(accessToken);
-
     var identity = getIdentity(accessToken);
-
-    console.log('=============IDENTITY================');
-    console.log(identity);
 
     var serviceData = {
         accessToken: accessToken,
@@ -49,6 +53,8 @@ OAuth.registerService('adfsoauth', 2, null, function (query) {
         serviceData: serviceData,
         options: {profile: {name: identity[config.profileNameField]}}
     };
+
+  });
 });
 
 // returns an object containing:
@@ -57,9 +63,26 @@ OAuth.registerService('adfsoauth', 2, null, function (query) {
 // - refreshToken, if this is the first authorization request
 var getTokens = function (query) {
 
-    if (typeof Session != 'undefined' && Session.get('companyId') != 'undefined') {
-        var config = Companies.findOne({_id: Session.get('companyId')});
+
+  Meteor.onConnection(function(result) {
+
+    console.log('CONNECTION RESULT');
+    console.log(result);
+
+    if (typeof result.httpHeaders.referer != 'undefined') { //Local
+      var hostname = result.httpHeaders.referer;
+    } if (typeof result.httpHeaders.host != 'undefined') { //Galaxy
+      var hostname = result.httpHeaders.host;
+    }
+
+    var hostnameArray = hostname.split('.');
+    var company = hostnameArray[0].replace('http://','').replace('https://','');
+
+    if (typeof company != 'undefined') {
+        console.log('FINDING CORRECT COMPANY: ' + company);
+        var config = Companies.findOne({slug: company});
     } else {
+        console.log('FINDING INCORRECT COMPANY');
         var config = ServiceConfiguration.configurations.findOne({service: 'adfsoauth'});
     }
 
@@ -99,13 +122,30 @@ var getTokens = function (query) {
             idToken: response.data.id_token
         };
     }
+  });
 };
 
 var getIdentity = function (accessToken) {
 
-    if (typeof Session != 'undefined' && Session.get('companyId') != 'undefined') {
-        var config = Companies.findOne({_id: Session.get('companyId')});
+  Meteor.onConnection(function(result) {
+
+    console.log('CONNECTION RESULT');
+    console.log(result);
+
+    if (typeof result.httpHeaders.referer != 'undefined') { //Local
+      var hostname = result.httpHeaders.referer;
+    } if (typeof result.httpHeaders.host != 'undefined') { //Galaxy
+      var hostname = result.httpHeaders.host;
+    }
+
+    var hostnameArray = hostname.split('.');
+    var company = hostnameArray[0].replace('http://','').replace('https://','');
+
+    if (typeof company != 'undefined') {
+        console.log('FINDING CORRECT COMPANY: ' + company);
+        var config = Companies.findOne({slug: company});
     } else {
+        console.log('FINDING INCORRECT COMPANY');
         var config = ServiceConfiguration.configurations.findOne({service: 'adfsoauth'});
     }
 
@@ -119,6 +159,7 @@ var getIdentity = function (accessToken) {
         throw _.extend(new Error("Failed to fetch identity from ADFS jwt token. " + err.message),
             {response: err.response});
     }
+  });
 };
 
 Adfsoauth.retrieveCredential = function (credentialToken, credentialSecret) {
