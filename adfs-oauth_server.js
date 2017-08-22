@@ -47,6 +47,8 @@ OAuth.registerService('adfsoauth', 2, null, function (query) {
 // - refreshToken, if this is the first authorization request
 var getTokens = function (query) {
 
+    console.log('FROM GENERIC PACKAGE: getTokens');
+
     if (typeof Session != 'undefined' && Session.get('companyId') != 'undefined') {
         var config = Companies.findOne({_id: Session.get('companyId')});
     } else {
@@ -93,6 +95,8 @@ var getTokens = function (query) {
 
 var getIdentity = function (accessToken) {
 
+    console.log('FROM GENERIC PACKAGE: getIdentity');
+
     if (typeof Session != 'undefined' && Session.get('companyId') != 'undefined') {
         var config = Companies.findOne({_id: Session.get('companyId')});
     } else {
@@ -112,5 +116,8 @@ var getIdentity = function (accessToken) {
 };
 
 Adfsoauth.retrieveCredential = function (credentialToken, credentialSecret) {
+
+    console.log('FROM GENERIC PACKAGE: retrieveCredential');
+
     return OAuth.retrieveCredential(credentialToken, credentialSecret);
 };
