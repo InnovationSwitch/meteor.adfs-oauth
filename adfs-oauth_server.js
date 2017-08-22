@@ -2,6 +2,9 @@ Adfsoauth = {};
 
 OAuth.registerService('adfsoauth', 2, null, function (query) {
 
+    console.log('FROM GENERIC PACKAGE REGISTERING SERVICE: adfsoauth');
+    console.log(query);
+
     if (typeof Session != 'undefined' && Session.get('companyId') != 'undefined') {
         var config = Companies.findOne({_id: Session.get('companyId')});
     } else {

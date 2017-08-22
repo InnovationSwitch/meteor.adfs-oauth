@@ -6,6 +6,9 @@ Adfsoauth = {};
 //   completion. Takes one argument, credentialToken on success, or Error on
 //   error.
 Adfsoauth.requestCredential = function (options, credentialRequestCompleteCallback) {
+
+  console.log('FROM GENERIC PACKAGE: requestCredential');
+
   // support both (options, callback) and (callback).
   if (!credentialRequestCompleteCallback && typeof options === 'function') {
     credentialRequestCompleteCallback = options;
@@ -58,6 +61,14 @@ Adfsoauth.requestCredential = function (options, credentialRequestCompleteCallba
   } else if (options.forceApprovalPrompt) {
     loginUrlParameters.prompt = 'consent'
   }
+
+  console.log('GENERIC SETTINGS CLIENT:');
+  console.log('CONFIG');
+  console.log(config);
+  console.log('OPTIONS');
+  console.log(options);
+  console.log('LOGINURLPARAMETERS');
+  console.log(loginUrlParameters);
 
   var loginStyle = OAuth._loginStyle('adfsoauth', config, options);
   _.extend(loginUrlParameters, {

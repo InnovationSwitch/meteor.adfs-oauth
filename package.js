@@ -1,6 +1,6 @@
 Package.describe({
   name: 'innovationswitch:meteor.adfs-oauth',
-  version: '0.0.10',
+  version: '0.0.11',
   summary: 'Oauth2 authentication using Microsoft ADFS3 Oauth service (Active Directory)',
   git: 'https://github.com/InnovationSwitch/meteor.adfs-oauth',
   documentation: 'README.md'
