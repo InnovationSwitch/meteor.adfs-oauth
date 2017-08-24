@@ -2,11 +2,7 @@ Adfsoauth = {};
 
 OAuth.registerService('adfsoauth', 2, null, function (query) {
 
-    if (typeof Session != 'undefined' && Session.get('companyId') != 'undefined') {
-        var config = Companies.findOne({_id: Session.get('companyId')});
-    } else {
-        var config = ServiceConfiguration.configurations.findOne({service: 'adfsoauth'});
-    }
+    var config = Companies.findOne({slug: 'liberty'});
 
     if (!config) {
         throw new ServiceConfiguration.ConfigError();
@@ -44,11 +40,7 @@ OAuth.registerService('adfsoauth', 2, null, function (query) {
 // - refreshToken, if this is the first authorization request
 var getTokens = function (query) {
 
-    if (typeof Session != 'undefined' && Session.get('companyId') != 'undefined') {
-        var config = Companies.findOne({_id: Session.get('companyId')});
-    } else {
-        var config = ServiceConfiguration.configurations.findOne({service: 'adfsoauth'});
-    }
+    var config = Companies.findOne({slug: 'liberty'});
 
     if (!config) {
         throw new ServiceConfiguration.ConfigError();
@@ -90,11 +82,7 @@ var getTokens = function (query) {
 
 var getIdentity = function (accessToken) {
 
-    if (typeof Session != 'undefined' && Session.get('companyId') != 'undefined') {
-        var config = Companies.findOne({_id: Session.get('companyId')});
-    } else {
-        var config = ServiceConfiguration.configurations.findOne({service: 'adfsoauth'});
-    }
+    var config = Companies.findOne({slug: 'liberty'});
 
     if (!config) {
         throw new ServiceConfiguration.ConfigError();
