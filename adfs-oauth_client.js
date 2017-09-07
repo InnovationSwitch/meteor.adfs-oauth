@@ -5,6 +5,26 @@ Adfsoauth = {};
 // @param credentialRequestCompleteCallback {Function} Callback function to call on
 //   completion. Takes one argument, credentialToken on success, or Error on
 //   error.
+
+Adfsoauth.getDataAfterRedirect = function () {
+
+  console.log('LOGGING FUNCTION: getDataAfterRedirect');
+
+  var credentialSecret, credentialToken;
+  for (var k in sessionStorage){
+    credentialSecret = sessionStorage[k];
+    credentialToken = k.replace(OAuth._storageTokenPrefix, "");
+  }
+  if (!credentialSecret || !credentialToken)
+            return null;
+
+  return {
+      loginService: "openid",
+      credentialToken: credentialToken,
+      credentialSecret: credentialSecret
+  };
+}
+
 Adfsoauth.requestCredential = function (options, credentialRequestCompleteCallback) {
 
   // support both (options, callback) and (callback).
