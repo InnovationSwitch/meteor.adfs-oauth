@@ -19,7 +19,7 @@ Adfsoauth.getDataAfterRedirect = function () {
             return null;
 
   return {
-      loginService: "openid",
+      loginService: "adfsoauth",
       credentialToken: credentialToken,
       credentialSecret: credentialSecret
   };
